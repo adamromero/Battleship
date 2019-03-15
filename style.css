@@ -1,0 +1,30 @@
+body {
+	/*background-color: black;*/
+}
+
+h1 {
+	text-align: center;
+}
+
+.placement {
+	text-align: center;
+	margin: 0 0 20px;
+}
+
+.board {
+    width: 440px;
+	margin: 0 auto 40px;
+	border: 1px solid black;
+}
+
+.column {
+	height: 40px;
+	width: 40px;
+	border: 2px solid black;
+	display: table-cell;
+	background-color: #80c4e2;
+}
+
+.ship-block {
+	background-color: gray;
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Battleship</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h1>BATTLESHIP</h1>
+	<div class="placement">
+		<button class="select-ship" data-ship="patrol" data-size="2">Patrol Boat</button>
+		<button class="select-ship" data-ship="destroyer" data-size="3">Destroyer</button>
+		<button class="select-ship" data-ship="submarine" data-size="4">Submarine</button>
+		<button class="select-ship" data-ship="battleship" data-size="4">Battleship</button>
+		<button class="select-ship" data-ship="carrier" data-size="5">Carrier</button>
+		<div>
+			<label for="horz">Horizontal</label>
+			<input id="horz" type="radio" value="horizontal" name="orientation" />
+		</div>
+		<div>
+			<label for="vert">Vertical</label>
+			<input id="vert" type="radio" value="vertical" name="orientation" />
+		</div>
+	</div>
+
+	<div id="playerboard"></div>
+	<div id="computerboard"></div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/nunjucks/3.0.1/nunjucks.min.js"></script>
+	<script src="script.js"></script>
+</body>
+</html>
