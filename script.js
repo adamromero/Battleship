@@ -18,6 +18,7 @@ const Player = () => {
 };
 
 const Gameboard = () => {
+
 	let board = [];
 	let shipButtons = document.querySelectorAll(".select-ship");
 
@@ -36,6 +37,12 @@ const Gameboard = () => {
 		document.getElementById("computerboard").innerHTML = source;
 	}
 
+	let deselectShips = () => {
+		shipButtons.forEach((ship) => {
+			ship.classList.remove("selected");
+		});
+	}
+
 	let selectShips = () => {
 		let positions = document.getElementById("playerboard").getElementsByClassName("column");
 		let shipSize = 0;
@@ -45,6 +52,8 @@ const Gameboard = () => {
 			shipButtons[i].addEventListener("click", function () {
 				shipSize = parseInt(this.getAttribute("data-size"));
 				shipType = this.getAttribute("data-ship");
+				deselectShips();
+				this.classList.add("selected");
 			});
 		}
 
@@ -52,9 +61,11 @@ const Gameboard = () => {
 			positions[i].addEventListener("click", function() {
 				let index = parseInt(this.getAttribute("data-index"));
 				if (shipSize > 0) {
-					renderShip(index, shipSize);
-					shipSize = 0;
-					document.querySelector("[data-ship='" + shipType + "'").disabled = true;
+					if (validShipPosition(index, shipSize)) {
+						document.querySelector("[data-ship='" + shipType + "'").disabled = true;
+						deselectShips();
+						shipSize = 0;
+					} 
 				}				
 			});
 		}
@@ -64,24 +75,54 @@ const Gameboard = () => {
 		for (let i = 0; i < positions.length; i++) {
 			positions[i].addEventListener("click", function() {
 				let index = parseInt(this.getAttribute("data-index"));
-				renderShip(index, shipSize);
+				validShipPosition(index, shipSize);
 			});
 		}
 	}
 
-	let renderShip = (index, shipSize) => {
+	let validShipPosition = (index, shipSize) => {
 		let orientation = document.querySelector("[name='orientation']:checked");
 		let increment = 10;
-		let max = shipSize * 10 + index;
+		let max = shipSize * 10 + index - 10;
 
 		if (orientation.value === "horizontal") {
 			increment = 1;
-			max = index + shipSize;
+			max = index + shipSize - 1;
+
+			if (index % 10 + shipSize > 10) {
+				display("Ship out of bounds, try again");
+				return false;
+			}
 		}
 
-		for (let j = index; j < max; j += increment) {
-			document.querySelector("[data-index='" + j + "']").classList.add("ship-block");
+		if (max >= 100) {
+			display("Ship out of bounds, try again");
+			return false;
 		}
+
+		for (let i = index; i <= max; i += increment) {
+			let position = document.querySelector("[data-index='" + i + "']");
+
+			if (position.classList.contains("ship-block")) {
+				display("Ship position overlapping, try again");
+				return false;
+			}
+		}
+
+		renderShip(index, max, increment);
+		display("");
+		return true;
+	}
+
+	let renderShip = (index, max, increment) => {
+		for (let i = index; i <= max; i += increment) {
+			let position = document.querySelector("[data-index='" + i + "']");
+			position.classList.add("ship-block");
+		}
+	}
+
+	let display = (message) => {
+		document.getElementById("message").innerText = message;
 	}
 
 	return {

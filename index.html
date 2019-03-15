@@ -8,23 +8,24 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<h1>BATTLESHIP</h1>
+	<h1 style="display:none;">BATTLESHIP</h1>
 	<div class="placement">
-		<button class="select-ship" data-ship="patrol" data-size="2">Patrol Boat</button>
-		<button class="select-ship" data-ship="destroyer" data-size="3">Destroyer</button>
-		<button class="select-ship" data-ship="submarine" data-size="4">Submarine</button>
-		<button class="select-ship" data-ship="battleship" data-size="4">Battleship</button>
-		<button class="select-ship" data-ship="carrier" data-size="5">Carrier</button>
-		<div>
-			<label for="horz">Horizontal</label>
-			<input id="horz" type="radio" value="horizontal" name="orientation" />
-		</div>
-		<div>
-			<label for="vert">Vertical</label>
-			<input id="vert" type="radio" value="vertical" name="orientation" />
-		</div>
+		<button class="select-ship" data-ship="patrol" data-size="2">Patrol Boat (2)</button>
+		<button class="select-ship" data-ship="destroyer" data-size="3">Destroyer (3)</button>
+		<button class="select-ship" data-ship="submarine" data-size="4">Submarine (4)</button>
+		<button class="select-ship" data-ship="battleship" data-size="4">Battleship (4)</button>
+		<button class="select-ship" data-ship="carrier" data-size="5">Carrier (5)</button>
 	</div>
+	<div class="placement">
+		<label for="horz">Horizontal</label>
+		<input id="horz" type="radio" value="horizontal" name="orientation" checked />
 
+		<label for="vert">Vertical</label>
+		<input id="vert" type="radio" value="vertical" name="orientation" />
+	</div>
+	<div class="placement">
+		<div id="message"></div>
+	</div>
 	<div id="playerboard"></div>
 	<div id="computerboard"></div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/nunjucks/3.0.1/nunjucks.min.js"></script>

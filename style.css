@@ -28,3 +28,24 @@ h1 {
 .ship-block {
 	background-color: gray;
 }
+
+.select-ship {
+	background: #80c4e2;
+    outline: 0;
+    border: 0;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.selected {
+	background: #0f7fb1;
+}
+
+label {
+	cursor: pointer;
+}
+
+#message {
+	height: 20px;
+}
