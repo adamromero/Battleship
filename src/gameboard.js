@@ -7,12 +7,12 @@ const GameBoard = () => {
 		0, 0, 0, 0, 0, 0, 0, 5, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 5, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 5, 0, 0,
-		2, 0, 3, 3, 3, 3, 0, 5, 0, 0,
+		2, 0, 3, 3, 3, 7, 0, 5, 0, 0,
 		2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		2, 0, 0, 0, 0, 6, 6, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 4, 4, 4, 4, 0, 0,
+		0, 0, 0, 0, 4, 4, 4, 4, 0, 0
 	];
 	let ships = new Map();
 	const BOARD_COL = 10;
@@ -87,8 +87,12 @@ const GameBoard = () => {
 		return true;
 	}
 
+	const getBoard = () => {
+		return board;
+	}
+
 	return {
-		init, placeShip, receiveAttack, board, ships, allShipsSunk
+		init, placeShip, receiveAttack, getBoard, ships, allShipsSunk
 	};
 };
 

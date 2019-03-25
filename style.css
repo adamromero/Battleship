@@ -1,9 +1,11 @@
 body {
+	font-family: 'Baloo Chettan', cursive;
 	/*background-color: black;*/
 }
 
-h1 {
+h1, h2 {
 	text-align: center;
+	text-transform: uppercase;
 }
 
 .placement {
@@ -36,6 +38,14 @@ h1 {
     padding: 6px 10px;
     cursor: pointer;
     font-weight: bold;
+}
+
+.hit {
+	background: red;
+}
+
+.miss {
+	background: white;
 }
 
 .selected {
