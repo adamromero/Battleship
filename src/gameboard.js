@@ -64,12 +64,16 @@ const GameBoard = () => {
 			board[x * BOARD_COL + y] === boardValues.SHIPS.CARRIER) {
 			ships.get(board[x * BOARD_COL + y]).hit();
 			board[x * BOARD_COL + y] = boardValues.STATUS.HIT;
+			return true;
 		} else if (board[x * BOARD_COL + y] === boardValues.STATUS.HIT || 
 			board[x * BOARD_COL + y] === boardValues.STATUS.MISS) {
-
+			return true;
 		} else if (board[x * BOARD_COL + y] === boardValues.STATUS.EMPTY) {
 			board[x * BOARD_COL + y] = boardValues.STATUS.MISS;
+			return true;
 		}
+
+		return false;
 	}
 
 	const allShipsSunk = () => {
