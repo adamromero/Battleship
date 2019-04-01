@@ -1,5 +1,6 @@
 import { Ship } from './ship';
 import { GameBoard } from './gameboard';
+import { displayMessage } from './display';
 
 const DOM = () => {
 	let playerBoard = document.getElementById("playerboard");
@@ -35,6 +36,10 @@ const DOM = () => {
 				} else if (board[row * 10 + col] === 6) {
 					status = `miss`;
 				}
+				/*
+				else if (board[row * 10 + col] !== 0) {
+					status = `ship-block`;
+				}*/
 				template += `<div class="column ${status}" data-index="${row * 10 + col}"></div>`;
 			}
 			template += `<div></div>`;
@@ -62,10 +67,6 @@ const Player = () => {
 
 	}
 
-	const displayMessage = (msg) => {
-		message.textContent = msg;
-	}
-
 	return {
 		AI_attackBoard
 	};
@@ -81,12 +82,28 @@ const Game = (() => {
 		return { x, y };
 	}
 	
+	const deselectShips = (shipButtons) => {
+		shipButtons.forEach((ship) => {
+			ship.classList.remove("selected");
+		});
+	}
+
+	const shipIsSelected = (shipButtons) => {
+		for (let i = 0; i < shipButtons.length; i++) {
+			if (shipButtons[i].classList.contains("selected")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	let init = () => {
 		let playerGameBoard = GameBoard();
 		playerGameBoard.init();
 
 		let computerGameBoard = GameBoard();
 		computerGameBoard.init();
+		computerGameBoard.randomlyPlaceShips();
 
 		let dom = DOM();
 		dom.renderPlayerBoard(playerGameBoard.getBoard());
@@ -95,21 +112,42 @@ const Game = (() => {
 		let player = Player();
 
 		playerGameBoard.placeShip();
+		let shipType, shipSize;
+
+		displayMessage("Select your ships above and click on the Player board to position");
+
+		const selectShips = document.querySelectorAll(".select-ship");
+		for (let i = 0; i < selectShips.length; i++) {
+			selectShips[i].addEventListener("click", function () {
+				shipType = parseInt(this.getAttribute("data-ship"));
+				shipSize = parseInt(this.getAttribute("data-size"));
+				deselectShips(selectShips);
+				this.classList.add("selected");
+			});
+		}
+		
 
 		document.getElementById("boardArena").addEventListener("click", function (event) {
-			if (event.target.parentNode.parentNode.matches("#playerboard")) {
+			if (event.target.parentNode.parentNode.matches("#playerboard") && shipIsSelected(selectShips)) {
 				let coords = getPosition(event.target);
 				let orientation = document.querySelector("input[name=orientation]:checked").value ===  "horizontal";
-				playerGameBoard.placeShip(coords.x, coords.y, orientation);
-			}
 
-			if (event.target.parentNode.parentNode.matches("#computerboard")) {
+				let selectedShip = document.querySelector("[data-ship='" + shipType + "']");
+				if (!selectedShip.disabled && playerGameBoard.placeShip(coords.x, coords.y, orientation, shipType, shipSize)) {
+					dom.renderPlayerBoard(playerGameBoard.getBoard());
+					selectedShip.disabled = true;
+					selectedShip.classList.remove("selected");
+				}
+			} else if (event.target.parentNode.parentNode.matches("#computerboard")) {
 				let coords = getPosition(event.target);
 				if (computerGameBoard.receiveAttack(coords.x, coords.y)) {
+					computerGameBoard.shipHasSunk();
 					dom.renderComputerBoard(computerGameBoard.getBoard());
 				}
 			}
 		});
+
+
 
 		//let computer = Player();
 		//computer.AI_attackBoard(playerGameBoard.getBoard());

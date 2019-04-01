@@ -11,11 +11,11 @@
 <body>
 	<h1>Battleship</h1>
 	<div class="placement">
-		<button class="select-ship" data-ship="patrol" data-size="2">Patrol Boat (2)</button>
-		<button class="select-ship" data-ship="destroyer" data-size="3">Destroyer (3)</button>
-		<button class="select-ship" data-ship="submarine" data-size="4">Submarine (4)</button>
-		<button class="select-ship" data-ship="battleship" data-size="4">Battleship (4)</button>
-		<button class="select-ship" data-ship="carrier" data-size="5">Carrier (5)</button>
+		<button class="select-ship" data-ship="1" data-size="2">Patrol Boat (2)</button>
+		<button class="select-ship" data-ship="2" data-size="3">Destroyer (3)</button>
+		<button class="select-ship" data-ship="3" data-size="4">Submarine (4)</button>
+		<button class="select-ship" data-ship="4" data-size="4">Battleship (4)</button>
+		<button class="select-ship" data-ship="5" data-size="5">Carrier (5)</button>
 	</div>
 	<div class="placement">
 		<label for="horz">Horizontal</label>
@@ -28,10 +28,14 @@
 		<div id="message"></div>
 	</div>
 	<div id="boardArena">
-		<h2>Player</h2>
-		<div id="playerboard"></div>
-		<h2>Computer</h2>
-		<div id="computerboard"></div>
+		<div class="board-container">
+			<h2>Player</h2>
+			<div id="playerboard"></div>
+		</div>
+		<div class="board-container">
+			<h2>Computer</h2>
+			<div id="computerboard"></div>
+		</div>
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/nunjucks/3.0.1/nunjucks.min.js"></script>
 	<script src="bundle.js"></script>
