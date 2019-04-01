@@ -53,10 +53,6 @@ const DOM = () => {
 	};
 }
 
-const message = () => {
-
-}
-
 //factory function
 const Player = () => {
 	let computerBoard = document.getElementById("computerboard");
@@ -86,6 +82,15 @@ const Game = (() => {
 		shipButtons.forEach((ship) => {
 			ship.classList.remove("selected");
 		});
+	}
+
+	const allShipsPlaced = (shipButtons) => {
+		for (let i = 0; i < shipButtons.length; i++) {
+			if (!shipButtons[i].disabled) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	const shipIsSelected = (shipButtons) => {
@@ -138,7 +143,7 @@ const Game = (() => {
 					selectedShip.disabled = true;
 					selectedShip.classList.remove("selected");
 				}
-			} else if (event.target.parentNode.parentNode.matches("#computerboard")) {
+			} else if (allShipsPlaced(selectShips) && event.target.parentNode.parentNode.matches("#computerboard")) {
 				let coords = getPosition(event.target);
 				if (computerGameBoard.receiveAttack(coords.x, coords.y)) {
 					computerGameBoard.shipHasSunk();
