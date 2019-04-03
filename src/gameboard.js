@@ -98,16 +98,16 @@ const GameBoard = () => {
 			board[x * BOARD_COL + y] === boardValues.SHIPS.BATTLESHIP ||
 			board[x * BOARD_COL + y] === boardValues.SHIPS.CARRIER) {
 			ships.get(board[x * BOARD_COL + y]).hit();
-			displayMessage(ships.get(board[x * BOARD_COL + y]).name + " hit!");
+			//displayMessage(ships.get(board[x * BOARD_COL + y]).name + " hit!");
 			board[x * BOARD_COL + y] = boardValues.STATUS.HIT;
 			return true;
 		} else if (board[x * BOARD_COL + y] === boardValues.STATUS.HIT || 
 			board[x * BOARD_COL + y] === boardValues.STATUS.MISS) {
 			displayMessage("Position already hit!");
-			return true;
+			return false;
 		} else if (board[x * BOARD_COL + y] === boardValues.STATUS.EMPTY) {
 			board[x * BOARD_COL + y] = boardValues.STATUS.MISS;
-			displayMessage("Missed!");
+			//displayMessage("Missed!");
 			return true;
 		}
 

@@ -1,5 +1,5 @@
 const displayMessage = (msg) => {
-	message.textContent = msg;
+	document.getElementById("message").innerHTML = `<div>${msg}</div>`;
 }
 
 export { displayMessage };

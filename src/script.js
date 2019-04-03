@@ -57,14 +57,20 @@ const DOM = () => {
 const Player = () => {
 	let computerBoard = document.getElementById("computerboard");
 	let playerBoard = document.getElementById("playerboard");
-	let message = document.getElementById("message");
 
-	const AI_attackBoard = (board) => {
+	const getAIAttackPosition = (board) => {
+		let x, y;
+		do {
+			x = Math.floor(Math.random() * 10);
+			y = Math.floor(Math.random() * 10);
+		}
+		while (board[x * 10 + y] > 5);
 
+		return { x, y };
 	}
 
 	return {
-		AI_attackBoard
+		getAIAttackPosition
 	};
 };
 
@@ -115,6 +121,7 @@ const Game = (() => {
 		dom.renderComputerBoard(computerGameBoard.getBoard());
 
 		let player = Player();
+		let computer = Player();
 
 		playerGameBoard.placeShip();
 		let shipType, shipSize;
@@ -132,7 +139,7 @@ const Game = (() => {
 		}
 		
 
-		document.getElementById("boardArena").addEventListener("click", function (event) {
+		document.getElementById("boardArena").addEventListener("click", function handleUI (event) {
 			if (event.target.parentNode.parentNode.matches("#playerboard") && shipIsSelected(selectShips)) {
 				let coords = getPosition(event.target);
 				let orientation = document.querySelector("input[name=orientation]:checked").value ===  "horizontal";
@@ -147,15 +154,22 @@ const Game = (() => {
 				let coords = getPosition(event.target);
 				if (computerGameBoard.receiveAttack(coords.x, coords.y)) {
 					computerGameBoard.shipHasSunk();
+					if (computerGameBoard.allShipsSunk()) {
+						displayMessage("You win!");
+						document.getElementById("boardArena").removeEventListener("click", handleUI);
+					}
 					dom.renderComputerBoard(computerGameBoard.getBoard());
+
+					let computerCoords = computer.getAIAttackPosition(playerGameBoard.getBoard());
+					playerGameBoard.receiveAttack(computerCoords.x, computerCoords.y);
+					if (playerGameBoard.allShipsSunk()) {
+						displayMessage("Computer wins!");
+						document.getElementById("boardArena").removeEventListener("click", handleUI);
+					}
+					dom.renderPlayerBoard(playerGameBoard.getBoard());
 				}
 			}
 		});
-
-
-
-		//let computer = Player();
-		//computer.AI_attackBoard(playerGameBoard.getBoard());
 	}
 
 	return {
