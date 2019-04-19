@@ -50,19 +50,16 @@ const GameBoard = () => {
 			increment = 1;
 
 			if (index % 10 + size > 10) {
-				displayMessage("Ship out of bounds, try again");
 				return false;
 			}
 		}
 
 		if (max >= 100) {
-			displayMessage("Ship out of bounds, try again");
 			return false;
 		}
 
 		for (let i = index; i <= max; i += increment) {
 			if (board[i] !== boardValues.STATUS.EMPTY) {
-				displayMessage("Position is overlapping ship, try again");
 				return false;
 			}
 		} 
@@ -98,19 +95,16 @@ const GameBoard = () => {
 			board[x * BOARD_COL + y] === boardValues.SHIPS.BATTLESHIP ||
 			board[x * BOARD_COL + y] === boardValues.SHIPS.CARRIER) {
 			ships.get(board[x * BOARD_COL + y]).hit();
-			//displayMessage(ships.get(board[x * BOARD_COL + y]).name + " hit!");
+			displayMessage(ships.get(board[x * BOARD_COL + y]).name + " hit!");
 			board[x * BOARD_COL + y] = boardValues.STATUS.HIT;
 			return true;
 		} else if (board[x * BOARD_COL + y] === boardValues.STATUS.HIT || 
 			board[x * BOARD_COL + y] === boardValues.STATUS.MISS) {
-			displayMessage("Position already hit!");
 			return false;
 		} else if (board[x * BOARD_COL + y] === boardValues.STATUS.EMPTY) {
 			board[x * BOARD_COL + y] = boardValues.STATUS.MISS;
-			//displayMessage("Missed!");
 			return true;
 		}
-
 		return false;
 	}
 

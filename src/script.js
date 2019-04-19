@@ -138,7 +138,6 @@ const Game = (() => {
 			});
 		}
 		
-
 		document.getElementById("boardArena").addEventListener("click", function handleUI (event) {
 			if (event.target.parentNode.parentNode.matches("#playerboard") && shipIsSelected(selectShips)) {
 				let coords = getPosition(event.target);
@@ -149,6 +148,10 @@ const Game = (() => {
 					dom.renderPlayerBoard(playerGameBoard.getBoard());
 					selectedShip.disabled = true;
 					selectedShip.classList.remove("selected");
+				}
+				if (allShipsPlaced(selectShips)) {
+					document.getElementById("horz").disabled = true;
+					document.getElementById("vert").disabled = true;
 				}
 			} else if (allShipsPlaced(selectShips) && event.target.parentNode.parentNode.matches("#computerboard")) {
 				let coords = getPosition(event.target);
